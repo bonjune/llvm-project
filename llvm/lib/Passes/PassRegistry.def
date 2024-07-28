@@ -146,6 +146,12 @@ MODULE_PASS("wholeprogramdevirt", WholeProgramDevirtPass())
 #define MODULE_PASS_WITH_PARAMS(NAME, CLASS, CREATE_PASS, PARSER, PARAMS)
 #endif
 MODULE_PASS_WITH_PARAMS(
+    "track-paths", "TrackPathsPass",
+    [](TrackPathsOpts Opts) {
+      return TrackPathsPass(Opts.SourceFileName, Opts.TargetLine);
+    },
+    parseTrackPathsPassOptions, "file,lineno")
+MODULE_PASS_WITH_PARAMS(
     "asan", "AddressSanitizerPass",
     [](AddressSanitizerOptions Opts) { return AddressSanitizerPass(Opts); },
     parseASanPassOptions, "kernel")
